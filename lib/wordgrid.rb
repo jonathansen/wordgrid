@@ -5,10 +5,5 @@ class Wordgrid
     @grid = Matrix[]
   end
   
-  def grid=(new_grid)
-    @grid = new_grid
-  end
-  def grid
-    @grid
-  end
+  attr_accessor :grid
 end
