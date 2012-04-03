@@ -5,11 +5,10 @@ class Wordgrid
     @grid = Matrix[]
   end
   
-  def set_grid(new_grid)
+  def grid=(new_grid)
     @grid = new_grid
   end
-
-  def get_grid
+  def grid
     @grid
   end
 end

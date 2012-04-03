@@ -9,7 +9,7 @@ describe Wordgrid, "#grid" do
       [ "d", "e", "f" ],
       [ "g", "h", "i" ]
     ]
-    wordgrid.set_grid(grid)
-    wordgrid.get_grid.should eq(grid)
+    wordgrid.grid = grid
+    wordgrid.grid.should eq(grid)
   end
 end
