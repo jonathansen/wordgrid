@@ -56,4 +56,14 @@ describe Wordgrid, "#grid" do
     expect { wordgrid.grid = grid }.to raise_error
   end
 
+  it "validates the grid even if you set it in the constructor" do
+    grid = Matrix[
+      [ "a", "b", "c" ],
+      [ "d", "e", "f" ],
+      [ "g", "~", "i" ]
+    ]
+
+    expect { wordgrid = Wordgrid.new(grid) }.to raise_error
+  end
+
 end

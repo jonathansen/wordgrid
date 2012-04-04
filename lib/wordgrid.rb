@@ -2,7 +2,7 @@ require 'matrix'
 
 class Wordgrid
   def initialize(initial_grid=Matrix[])
-    @grid = initial_grid
+    self.grid = initial_grid
   end
   
   attr_reader :grid
@@ -15,7 +15,7 @@ class Wordgrid
     end
 
     unless new_grid.square?
-      raise ArgumentError "grid must be a square."
+      raise ArgumentError "grid must be a square." # do I really care about this?
     end
 
     @grid = new_grid
