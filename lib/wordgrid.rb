@@ -1,8 +1,8 @@
 require 'matrix'
 
 class Wordgrid
-  def initialize
-    @grid = Matrix[]
+  def initialize(initial_grid=Matrix[])
+    @grid = initial_grid
   end
   
   attr_reader :grid

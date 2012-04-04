@@ -13,6 +13,16 @@ describe Wordgrid, "#grid" do
     wordgrid.grid.should eq(grid)
   end
 
+  it "will let you set a grid in the constructor" do
+    grid = Matrix[
+      [ "a", "b", "c" ],
+      [ "d", "e", "f" ],
+      [ "g", "h", "i" ]
+    ]
+    wordgrid = Wordgrid.new(grid)
+    wordgrid.grid.should eq(grid)
+  end
+
   it "throws an error if any of the cells are numbers" do
     wordgrid = Wordgrid.new
     grid = Matrix[
@@ -45,4 +55,5 @@ describe Wordgrid, "#grid" do
 
     expect { wordgrid.grid = grid }.to raise_error
   end
+
 end
