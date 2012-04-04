@@ -67,3 +67,30 @@ describe Wordgrid, "#grid" do
   end
 
 end
+
+describe Wordgrid, "#find_word" do
+  grid = Matrix[
+    [ "a", "b", "c" ],
+    [ "d", "e", "f" ],
+    [ "a", "b", "c" ]
+  ]
+  it "should find a word in a grid" do
+    wordgrid = Wordgrid.new(grid)
+    wordgrid.has_word?("bead").should eq(true)
+  end
+
+  it "shouldn't find a word that isn't in the grid" do
+    wordgrid = Wordgrid.new(grid)
+    wordgrid.has_word?("spaceman").should eq(false)
+  end
+
+  it "shouldn't think it found a word if it repeats a cell to do so" do
+    wordgrid = Wordgrid.new(grid)
+    wordgrid.has_word?("beaded").should eq(false)
+  end
+
+  it "shouldn't think it found a word if it only found part of it" do
+    wordgrid = Wordgrid.new(grid)
+    wordgrid.has_word?("beady").should eq(false)
+  end
+end
