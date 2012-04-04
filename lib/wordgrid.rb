@@ -13,7 +13,9 @@ class Matrix
   end
 
   # why doesn't matrix natively support this?!?
-  def neighbor_cells(row, column)
+  def neighbor_cells(root_cell)
+    row = root_cell[0]
+    column = root_cell[1]
     cells = []
 
     cells.push([row-1, column-1]) if row-1 >= 0 and column-1 >= 0 #NW
@@ -33,6 +35,7 @@ class Wordgrid
 
   def initialize(initial_grid=Matrix[])
     self.grid = initial_grid
+    @cell_stack = []
   end
   
   attr_reader :grid
@@ -55,18 +58,35 @@ class Wordgrid
     letters = word.split('')
     first_letter = letters.shift
     first_cells = @grid.find_cells_for_letter(first_letter)
-    if first_cells.size == 0
-      return false
-    end
-# TODO, this is getting silly. figure out how to do this with recursion
-    first_cells.each {|cell|
-      letters.each { |letter|
-        neighbors = @grid.neighbor_cells(cell[0], cell[1])
-        neighbors.each{ |neighbor|
-          if @grid.element(neighbor[0],neighbor[1]) == letter
-        }
-      }
 
-    }
+    @cell_stack = []
+    first_cells.each |cell| do
+      @cell_stack.push(cell)
+      if find_next_letter_in_neighborhood()
+        return true
+      end
+      @cell_stack = []
+    end
+    return false
+  end
+
+=begin
+1. start with a cell
+2. look at all the neighbors of the cell for the next letter.
+  if we don't find it, move back up to try a different path (if there were other matches a cell up)
+  if we do find it
+    if we're at the end of the string, stop, and return true
+    if we aren't at the end of the string, goto 2 for the cell we found
+
+along the way, build a stack of the path. So for the following grid:
+  A B C
+  D E F
+  G H I
+a final stack for "BEAD" should be: [0,1], [1,1], [0,0], [1,0]
+
+=end
+  def find_next_letter_in_neighborhood
+    neighbors = @grid.neighbor_cells
+
   end
 end
