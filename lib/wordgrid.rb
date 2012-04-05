@@ -55,14 +55,13 @@ class Wordgrid
   end
 
   def has_word?(word)
-    letters = word.split('')
-    first_letter = letters.shift
-    first_cells = @grid.find_cells_for_letter(first_letter)
+    @letters = word.split('')
+    first_cells = @grid.find_cells_for_letter(@letters[0])
 
     @cell_stack = []
-    first_cells.each |cell| do
+    first_cells.each do |cell|
       @cell_stack.push(cell)
-      if find_next_letter_in_neighborhood()
+      if find_next_letter_in_neighborhood() == true
         return true
       end
       @cell_stack = []
@@ -86,7 +85,21 @@ a final stack for "BEAD" should be: [0,1], [1,1], [0,0], [1,0]
 
 =end
   def find_next_letter_in_neighborhood
-    neighbors = @grid.neighbor_cells
-
+    if (@cell_stack.size == @letters.size)
+      return true
+    end
+    neighbors = @grid.neighbor_cells(@cell_stack[-1])
+    current_letter = @letters[@cell_stack.size]
+    neighbors.each do |neighbor|
+      neighbor_letter = @grid.element(neighbor[0], neighbor[1])
+      if neighbor_letter == current_letter
+        @cell_stack.push(neighbor)
+        if find_next_letter_in_neighborhood == true
+          return true
+        end
+      end
+    end
+    @cell_stack.pop
+    return false
   end
 end
