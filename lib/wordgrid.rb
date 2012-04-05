@@ -91,6 +91,11 @@ a final stack for "BEAD" should be: [0,1], [1,1], [0,0], [1,0]
     neighbors = @grid.neighbor_cells(@cell_stack[-1])
     current_letter = @letters[@cell_stack.size]
     neighbors.each do |neighbor|
+      # don't retraverse nodes on the path we've taken thus far.
+      if @cell_stack.find { |cell| cell == neighbor }
+        next
+      end
+
       neighbor_letter = @grid.element(neighbor[0], neighbor[1])
       if neighbor_letter == current_letter
         @cell_stack.push(neighbor)
