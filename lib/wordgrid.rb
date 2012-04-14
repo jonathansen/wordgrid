@@ -102,6 +102,7 @@ a final stack for "BEAD" should be: [0,1], [1,1], [0,0], [1,0]
     @cell_stack.pop
     return false
   end
+  private :find_next_letter_in_neighborhood
 end
 
 # Adding two helper functions to the standard Matrix class which are
