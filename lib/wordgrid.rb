@@ -1,21 +1,37 @@
 require 'matrix'
 
-# Wordgrid is useful for sucking the life out of games like Boggle or
-# Scramble with Friends. Given a matrix of letters, it provides a method
-# named has_word? which looks in the matrix for a requested word.
-#
-# Paired with a driver script that iterates over a dictionary and checks
-# every single word to see if it matches, then you are provided with the
-# full list of words in the game. That would make the game a miserable
-# bore, but it was fun to write.
+=begin
+Wordgrid is useful for sucking the life out of games like Boggle or
+Scramble with Friends. Given a matrix of letters, it provides a method
+named has_word? which looks in the matrix for a requested word.
+
+Paired with a driver script that iterates over a dictionary and checks
+every single word to see if it matches, then you are provided with the
+full list of words in the game. That would make the game a miserable
+bore, but it was fun to write.
+=end
 class Wordgrid
 
+# Wordgrid.new can optionally be called with a Matrix object.
   def initialize(initial_grid=Matrix[])
     self.grid = initial_grid
     @cell_stack = []
   end
-  
+
+# Wordgrid.grid is the underlying matrix of letters.
   attr_reader :grid
+
+=begin
+grid takes a Matrix object and validates that it is acceptable.
+
+* *Args* :
+  - +new_grid+ -> the proposed new Matrix object.
+* *Returns* :
+  - the Matrix object itself.
+* *Raises* : +ArgumentError+ in the following circumstances:
+  - any of the cells consist of something other than single letters
+  - the grid is not a square
+=end
 
   def grid=(new_grid)
     # make sure each cell is a single letter character
@@ -31,6 +47,8 @@ class Wordgrid
     @grid = new_grid
   end
 
+=begin
+=end
   def has_word?(word)
     @letters = word.split('')
     first_cells = @grid.find_cells_for_letter(@letters[0])
