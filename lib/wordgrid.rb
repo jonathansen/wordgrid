@@ -48,6 +48,22 @@ grid takes a Matrix object and validates that it is acceptable.
   end
 
 =begin
+has_word? is Wordgrid's raison d'être. It take a word and returns
+true/false based on whether the word can be found in the grid.
+
+has_word? makes sure not to re-trace its steps when looking for a word.
+So, for example, it will find "BEAD" in the following grid, but it will
+not find "BEADED":
+  A B C
+  D E F
+  G H I
+
+* *Args* :
+  - +word+ -> the word to search the grid for
+* *Returns* :
+  - +true+, if the word has been found, and +false+ otherwise
+* *Raises* :
+  - Nothing
 =end
   def has_word?(word)
     @letters = word.split('')
@@ -65,6 +81,10 @@ grid takes a Matrix object and validates that it is acceptable.
   end
 
 =begin
+find_next_letter_in_neighborhood calls itself recursively to look for
+each letter in the word. One it finds the word, it stop the recursive
+chain returning true. It follows the following plan:
+
 1. start with a cell
 2. look at all the neighbors of the cell for the next letter.
   if we don't find it, move back up to try a different path (if there were other matches a cell up)
@@ -109,17 +129,18 @@ end
 # needed by the Wordgrid class.
 class Matrix
 
-# Adds a method to the Matrix class which returns an array of cells
-# which match the string passed in. A cell is just an array with the
-# row and column.
-#
-# * *Args* :
-#   - +letter+ -> the character to search the matrix for.
-# * *Returns* :
-#   - the cells which match the letter passed in. An array of two-value arrays.
-# * *Raises* :
-#   - Nothing
-#
+=begin
+Adds a method to the Matrix class which returns an array of cells
+which match the string passed in. A cell is just an array with the
+row and column.
+
+* *Args* :
+  - +letter+ -> the character to search the matrix for.
+* *Returns* :
+  - the cells which match the letter passed in. An array of two-value arrays.
+* *Raises* :
+  - Nothing
+=end
 
   def find_cells_for_letter(letter)
     cells = []
@@ -132,26 +153,28 @@ class Matrix
     return cells
   end
 
-# Adds a method to the Matrix class which will find all the cells which
-# border the cell requested
-#
-# Neighbors are defined by the cells northwest, north, northeast, west,
-# east, southwest, south, and southeast of the original cell. If the
-# original cell is on the edge of the matrix, it does not wrap. In
-# other words, for the following matrix:
-#   A B C
-#   D E F
-#   G H I
-# the cell containing the letter E has the neighbors A,B,C,D,F,G,H,I.
-# However, the cell containing the letter A only has the neighbors
-# B,D,E.
-#
-# * *Args* :
-#   - +root_cell+ -> a two-element array (row, cell) identifying the cell whose neighbors we are seeking.
-# * *Returns* :
-#   - an array of cells (each cell is a two-element array, containing row and cell) neighboring the original cell.
-# * *Raises* :
-#   - Nothing
+=begin
+Adds a method to the Matrix class which will find all the cells which
+border the cell requested
+
+Neighbors are defined by the cells northwest, north, northeast, west,
+east, southwest, south, and southeast of the original cell. If the
+original cell is on the edge of the matrix, it does not wrap. In
+other words, for the following matrix:
+  A B C
+  D E F
+  G H I
+the cell containing the letter E has the neighbors A,B,C,D,F,G,H,I.
+However, the cell containing the letter A only has the neighbors
+B,D,E.
+
+* *Args* :
+  - +root_cell+ -> a two-element array (row, cell) identifying the cell whose neighbors we are seeking.
+* *Returns* :
+  - an array of cells (each cell is a two-element array, containing row and cell) neighboring the original cell.
+* *Raises* :
+  - Nothing
+=end
 
   def neighbor_cells(root_cell)
     row = root_cell[0]
