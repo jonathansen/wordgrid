@@ -25,7 +25,26 @@ class Matrix
     return cells
   end
 
+# Adds a method to the Matrix class which will find all the cells which
+# border the cell requested
 #
+# Neighbors are defined by the cells northwest, north, northeast, west,
+# east, southwest, south, and southeast of the original cell. If the
+# original cell is on the edge of the matrix, it does not wrap. In
+# other words, for the following matrix:
+#   A B C
+#   D E F
+#   G H I
+# the cell containing the letter E has the neighbors A,B,C,D,F,G,H,I.
+# However, the cell containing the letter A only has the neighbors
+# B,D,E.
+#
+# * *Args* :
+#   - +root_cell+ -> a two-element array (row, cell) identifying the cell whose neighbors we are seeking.
+# * *Returns* :
+#   - an array of cells (each cell is a two-element array, containing row and cell) neighboring the original cell.
+# * *Raises* :
+#   - Nothing
   def neighbor_cells(root_cell)
     row = root_cell[0]
     column = root_cell[1]
