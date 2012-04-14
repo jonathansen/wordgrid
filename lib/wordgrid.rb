@@ -1,6 +1,19 @@
 require 'matrix'
 
 class Matrix
+
+# Adds a method to the Matrix class which returns an array of cells
+# which match the string passed in. A cell is just an array with the
+# row and column.
+#
+# * *Args* :
+#   - +letter+ -> the character to search the matrix for.
+# * *Returns* :
+#   - the cells which match the letter passed in. An array of two-value arrays.
+# * *Raises* :
+#   - Nothing
+#
+
   def find_cells_for_letter(letter)
     cells = []
     each_with_index do |e, row, column|
@@ -12,7 +25,7 @@ class Matrix
     return cells
   end
 
-  # why doesn't matrix natively support this?!?
+#
   def neighbor_cells(root_cell)
     row = root_cell[0]
     column = root_cell[1]
