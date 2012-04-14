@@ -3,7 +3,7 @@ require 'matrix'
 class Matrix
   def find_cells_for_letter(letter)
     cells = []
-    each_with_index(:all) do |e, row, column|
+    each_with_index do |e, row, column|
       if (e == letter)
         cell = [row, column]
         cells.push(cell)
