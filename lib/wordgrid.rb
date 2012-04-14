@@ -1,68 +1,13 @@
 require 'matrix'
 
-class Matrix
-
-# Adds a method to the Matrix class which returns an array of cells
-# which match the string passed in. A cell is just an array with the
-# row and column.
+# Wordgrid is useful for sucking the life out of games like Boggle or
+# Scramble with Friends. Given a matrix of letters, it provides a method
+# named has_word? which looks in the matrix for a requested word.
 #
-# * *Args* :
-#   - +letter+ -> the character to search the matrix for.
-# * *Returns* :
-#   - the cells which match the letter passed in. An array of two-value arrays.
-# * *Raises* :
-#   - Nothing
-#
-
-  def find_cells_for_letter(letter)
-    cells = []
-    each_with_index do |e, row, column|
-      if (e == letter)
-        cell = [row, column]
-        cells.push(cell)
-      end
-    end
-    return cells
-  end
-
-# Adds a method to the Matrix class which will find all the cells which
-# border the cell requested
-#
-# Neighbors are defined by the cells northwest, north, northeast, west,
-# east, southwest, south, and southeast of the original cell. If the
-# original cell is on the edge of the matrix, it does not wrap. In
-# other words, for the following matrix:
-#   A B C
-#   D E F
-#   G H I
-# the cell containing the letter E has the neighbors A,B,C,D,F,G,H,I.
-# However, the cell containing the letter A only has the neighbors
-# B,D,E.
-#
-# * *Args* :
-#   - +root_cell+ -> a two-element array (row, cell) identifying the cell whose neighbors we are seeking.
-# * *Returns* :
-#   - an array of cells (each cell is a two-element array, containing row and cell) neighboring the original cell.
-# * *Raises* :
-#   - Nothing
-  def neighbor_cells(root_cell)
-    row = root_cell[0]
-    column = root_cell[1]
-    cells = []
-
-    cells.push([row-1, column-1]) if row-1 >= 0 and column-1 >= 0 #NW
-    cells.push([row-1, column]) if row-1 >= 0 #N
-    cells.push([row-1, column+1]) if row-1 >= 0 and column+1 < column_size #NE
-    cells.push([row, column-1]) if column-1 >=0 #W
-    cells.push([row, column+1]) if column+1 < column_size #E
-    cells.push([row+1, column-1]) if row+1 < row_size and column-1 >= 0 #SW
-    cells.push([row+1, column]) if row+1 < row_size #S
-    cells.push([row+1, column+1]) if row+1 < row_size and column+1 < column_size #SE
-
-    return cells
-  end
-end
-
+# Paired with a driver script that iterates over a dictionary and checks
+# every single word to see if it matches, then you are provided with the
+# full list of words in the game. That would make the game a miserable
+# bore, but it was fun to write.
 class Wordgrid
 
   def initialize(initial_grid=Matrix[])
@@ -140,3 +85,70 @@ a final stack for "BEAD" should be: [0,1], [1,1], [0,0], [1,0]
     return false
   end
 end
+
+# Adding two helper functions to the standard Matrix class which are
+# needed by the Wordgrid class.
+class Matrix
+
+# Adds a method to the Matrix class which returns an array of cells
+# which match the string passed in. A cell is just an array with the
+# row and column.
+#
+# * *Args* :
+#   - +letter+ -> the character to search the matrix for.
+# * *Returns* :
+#   - the cells which match the letter passed in. An array of two-value arrays.
+# * *Raises* :
+#   - Nothing
+#
+
+  def find_cells_for_letter(letter)
+    cells = []
+    each_with_index do |e, row, column|
+      if (e == letter)
+        cell = [row, column]
+        cells.push(cell)
+      end
+    end
+    return cells
+  end
+
+# Adds a method to the Matrix class which will find all the cells which
+# border the cell requested
+#
+# Neighbors are defined by the cells northwest, north, northeast, west,
+# east, southwest, south, and southeast of the original cell. If the
+# original cell is on the edge of the matrix, it does not wrap. In
+# other words, for the following matrix:
+#   A B C
+#   D E F
+#   G H I
+# the cell containing the letter E has the neighbors A,B,C,D,F,G,H,I.
+# However, the cell containing the letter A only has the neighbors
+# B,D,E.
+#
+# * *Args* :
+#   - +root_cell+ -> a two-element array (row, cell) identifying the cell whose neighbors we are seeking.
+# * *Returns* :
+#   - an array of cells (each cell is a two-element array, containing row and cell) neighboring the original cell.
+# * *Raises* :
+#   - Nothing
+
+  def neighbor_cells(root_cell)
+    row = root_cell[0]
+    column = root_cell[1]
+    cells = []
+
+    cells.push([row-1, column-1]) if row-1 >= 0 and column-1 >= 0 #NW
+    cells.push([row-1, column]) if row-1 >= 0 #N
+    cells.push([row-1, column+1]) if row-1 >= 0 and column+1 < column_size #NE
+    cells.push([row, column-1]) if column-1 >=0 #W
+    cells.push([row, column+1]) if column+1 < column_size #E
+    cells.push([row+1, column-1]) if row+1 < row_size and column-1 >= 0 #SW
+    cells.push([row+1, column]) if row+1 < row_size #S
+    cells.push([row+1, column+1]) if row+1 < row_size and column+1 < column_size #SE
+
+    return cells
+  end
+end
+
