@@ -71,7 +71,7 @@ not find "BEADED":
   - Nothing
 =end
   def has_word?(word)
-    @letters = word.split('')
+    @letters = word.downcase.split('')
     first_cells = @grid.find_cells_for_letter(@letters[0])
 
     @cell_stack = []

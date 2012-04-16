@@ -109,4 +109,9 @@ describe Wordgrid, "#find_word" do
     wordgrid = Wordgrid.new(grid)
     wordgrid.has_word?("beady").should eq(false)
   end
+
+  it "should find the word regardless of case" do
+    wordgrid = Wordgrid.new(grid)
+    wordgrid.has_word?("BeAd").should eq(true)
+  end
 end
