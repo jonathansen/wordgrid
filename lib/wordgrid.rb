@@ -45,6 +45,11 @@ grid takes a Matrix object and validates that it is acceptable.
     end
 
     @grid = new_grid
+
+    # lowercase each cell in the grid.
+    @grid.each do |cell|
+      cell.downcase!
+    end
   end
 
 =begin

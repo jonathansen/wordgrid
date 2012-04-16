@@ -66,6 +66,22 @@ describe Wordgrid, "#grid" do
     expect { wordgrid = Wordgrid.new(grid) }.to raise_error
   end
 
+  it "lowercases all the letters in the grid" do
+    grid = Matrix[
+      [ "A", "b", "c" ],
+      [ "d", "E", "f" ],
+      [ "g", "h", "I" ]
+    ]
+
+    lc_grid = Matrix[
+      [ "a", "b", "c" ],
+      [ "d", "e", "f" ],
+      [ "g", "h", "i" ]
+    ]
+
+    wordgrid = Wordgrid.new(grid)
+    wordgrid.grid.should eq(lc_grid)
+  end
 end
 
 describe Wordgrid, "#find_word" do
